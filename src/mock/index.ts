@@ -9,6 +9,7 @@ import {
   updateUser,
   getUserList,
 } from "./modules/user/user"
+import permission from "./modules/permission/index"
 Mock.setup({
   timeout: "400-600",
 })
@@ -30,3 +31,6 @@ Mock.mock(/\api\/user\/add/, "post", createUser)
 Mock.mock(/\api\/user\/edit/, "post", updateUser)
 Mock.mock(/\api\/user\/del/, "post", deleteUser)
 Mock.mock(/\api\/user\/userlist/, "get", getUserList)
+
+// 登录接口
+Mock.mock(/\api\/permission\/getmenu/, "post", permission.getMenu)

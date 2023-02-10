@@ -11,7 +11,6 @@ export const useAsideStore = defineStore("aside", {
   actions: {
     toggleCollapse() {
       this.isCollapse = !this.isCollapse
-      console.log(this.isCollapse)
     },
   },
   persist: {

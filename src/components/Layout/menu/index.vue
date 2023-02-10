@@ -52,6 +52,8 @@ import { getMenu } from "@/api/home"
 import { useRoute, useRouter } from "vue-router"
 import { useAsideStore } from "@/stores/aside"
 import { useBreadStore } from "@/stores/bread"
+import { useMenuStore } from "@/stores/menu"
+const menuStore = useMenuStore()
 const asideStore = useAsideStore()
 const breadStore = useBreadStore()
 const router = useRouter()
@@ -60,8 +62,9 @@ let menuArr = ref([])
 // 缺省值-是否折叠
 let loading = ref(menuArr.value.length)
 onMounted(async () => {
-  let { data: res } = await getMenu()
-  menuArr.value = res.data
+  // let { data: res } = await getMenu()
+
+  menuArr.value = menuStore.menu
 })
 const goURL = (item) => {
   if (

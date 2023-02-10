@@ -27,12 +27,15 @@
 
 <script setup lang="ts">
 import { username, password } from "@/utils/rules/login"
-import type { FormInstance } from "element-plus"
+import { ElMessage, type FormInstance } from "element-plus"
 import { reactive, ref } from "vue"
 import Cookies from "js-cookie"
 import Mock from "mockjs"
+import { getMenu } from "@/api/permission"
 import { useRouter } from "vue-router"
+import { useMenuStore } from "@/stores/menu"
 const router = useRouter()
+const menuStore = useMenuStore()
 const formLogin = ref<FormInstance>()
 interface data {
   username: string
@@ -59,17 +62,25 @@ const rules = reactive({
   ],
 })
 const onReset = async () => {
-  await formLogin.value?.resetFields()
+  formLogin.value?.resetFields()
 }
 
 const onSubmit = async () => {
-  await formLogin.value?.validate((valid) => {
+  await formLogin.value?.validate(async (valid) => {
     if (valid) {
-      const token = Mock.Random.guid()
-      Cookies.set("token", token)
-      if (Cookies.get("token")) {
-        router.push("/")
-      }
+      try {
+        const { data: data1 } = await getMenu(data)
+        if (data1.code == 20000) {
+          menuStore.setMenu(data1.data.menu)
+          menuStore.addMenu(router)
+          Cookies.set("token", data1.data.token)
+          router.push({
+            name: "home",
+          })
+        } else {
+          return ElMessage.error(`登录失败，${data1.data.message}`)
+        }
+      } catch (error) {}
     }
   })
 }

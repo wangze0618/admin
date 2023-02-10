@@ -22,7 +22,9 @@
         <template #dropdown>
           <el-dropdown-menu class="menu">
             <el-dropdown-item class="menu-item">个人中心</el-dropdown-item>
-            <el-dropdown-item class="menu-item">退出登录</el-dropdown-item>
+            <el-dropdown-item @click="logout" class="menu-item"
+              >退出登录</el-dropdown-item
+            >
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -35,8 +37,14 @@ import { ref, watch } from "vue"
 import { Menu } from "@element-plus/icons-vue"
 import { useAsideStore } from "@/stores/aside"
 import { useBreadStore } from "@/stores/bread"
+import { useMenuStore } from "@/stores/menu"
+import Cookie from "js-cookie"
+import { useRouter } from "vue-router"
+
 const asideStore = useAsideStore()
 const breadStore = useBreadStore()
+const menuStore = useMenuStore()
+const router = useRouter()
 let breadItem = ref([])
 watch(
   () => breadStore.tabList,
@@ -50,6 +58,13 @@ watch(
 )
 const changeCollapse = () => {
   asideStore.toggleCollapse()
+}
+
+const logout = () => {
+  // 清楚cookie 的token
+  Cookie.remove("token")
+  menuStore.clearMenu()
+  router.push("/login")
 }
 </script>
 
