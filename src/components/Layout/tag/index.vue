@@ -21,7 +21,6 @@ import { useRouter, useRoute } from "vue-router"
 import { ElMessage, ElMessageBox } from "element-plus"
 const router = useRouter()
 const route = useRoute()
-console.log(route)
 const breadStore = useBreadStore()
 const goTag = (d) => {
   router.push(d.path)

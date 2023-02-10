@@ -13,6 +13,7 @@
     "axios": "^1.2.1",
     "echarts": "^5.4.1",
     "element-plus": "^2.2.26",
+    "js-cookie": "^3.0.1",
     "mockjs": "^1.1.0",
     "node-sass": "^8.0.0",
     "normalize.css": "^8.0.1",

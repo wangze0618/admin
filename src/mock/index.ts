@@ -3,6 +3,12 @@ import { getCount } from "./modules/home/count"
 import { getMenu } from "./modules/home/menu"
 import { getTable } from "./modules/home/table"
 import { getCharts } from "./modules/home/charts"
+import {
+  createUser,
+  deleteUser,
+  updateUser,
+  getUserList,
+} from "./modules/user/user"
 Mock.setup({
   timeout: "400-600",
 })
@@ -18,3 +24,9 @@ Mock.mock(/\api\/home\/count/, "get", getCount)
 
 // charts数据
 Mock.mock(/\api\/home\/charts/, "get", getCharts)
+
+// 用户列表数据
+Mock.mock(/\api\/user\/add/, "post", createUser)
+Mock.mock(/\api\/user\/edit/, "post", updateUser)
+Mock.mock(/\api\/user\/del/, "post", deleteUser)
+Mock.mock(/\api\/user\/userlist/, "get", getUserList)
